@@ -1,0 +1,6 @@
+.Item {
+    border: 1px solid red;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 5px;
+}

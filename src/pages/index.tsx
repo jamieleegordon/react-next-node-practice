@@ -1,19 +1,27 @@
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 import { useRouter } from 'next/router'
 import Card from '@/components/card'
+import Item from '@/components/item'
+import { useSelector, useDispatch } from 'react-redux'
+import { increment } from '../store/counterSlice'
+import type { RootState } from '../store'
+import Player from './player'
+import Person from './person'
 
 export default function Home() {
-  const [count, setCount] = useState(0)
+  const count = useSelector((state: RootState) => state.counter.count)
+  const dispatch = useDispatch()
+
   const [message, setMessage] = useState<string>('')
 
   const cardNames: string[] = ["Jamie-Lee", "Alisa", "Ben", "Charlie"]
+  const items: string[] = ["Apple", "Banana", "Orange"]
 
   const router = useRouter()
 
-  const increment = () => {
-    setCount(prev => prev + 1)
+  const handleIncrement = () => {
+    dispatch(increment())
   }
 
   const goToAboutPage = () => {
@@ -31,6 +39,12 @@ export default function Home() {
   const goToNotesPage = () => {
     router.push('/notes')
   }
+  const goToDogsPage = () => {
+    router.push('/dogs')
+  }
+  const goToPlayerPage = () => {
+    router.push('/player')
+  }
 
   useEffect(() => {
     const fetchMessage = async () => {
@@ -44,10 +58,15 @@ export default function Home() {
 
   return (
     <div>
+
+      {items.map((item, index) => (
+        <Item key={index} itemName={item} indexValue={index} />
+      ))}
+
       <p>Count: {count}</p>
       <button 
         className={styles.button} 
-        onClick={increment}
+        onClick={handleIncrement}
       >
         Increment
       </button>
@@ -87,9 +106,27 @@ export default function Home() {
         Notes
       </button>
 
+      <button 
+        className = {styles.button}
+        onClick={goToDogsPage}
+      >
+        Dogs
+      </button>
+
+      <button 
+        className = {styles.button}
+        onClick={goToPlayerPage}
+      >
+        Player
+      </button>
+
       {cardNames.map((name, index) => (
         <Card key={index} name={name} />
       ))}
+
+      <Player message='hellooooo'/>
+
+      <Person name = "Jamie-Lee" age = {22} />
 
       <p>{message}</p>
     
