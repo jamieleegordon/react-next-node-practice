@@ -2,10 +2,13 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 import { useRouter } from 'next/router'
+import Card from '@/components/card'
 
 export default function Home() {
   const [count, setCount] = useState(0)
   const [message, setMessage] = useState<string>('')
+
+  const cardNames: string[] = ["Jamie-Lee", "Alisa", "Ben", "Charlie"]
 
   const router = useRouter()
 
@@ -24,6 +27,9 @@ export default function Home() {
   }
   const goToLoginPage = () => {
     router.push('/login')
+  }
+  const goToNotesPage = () => {
+    router.push('/notes')
   }
 
   useEffect(() => {
@@ -73,7 +79,18 @@ export default function Home() {
       >
         Login
       </button>
-      
+
+      <button 
+        className = {styles.button}
+        onClick={goToNotesPage}
+      >
+        Notes
+      </button>
+
+      {cardNames.map((name, index) => (
+        <Card key={index} name={name} />
+      ))}
+
       <p>{message}</p>
     
     </div>

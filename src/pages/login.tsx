@@ -6,8 +6,7 @@ export default function Login() {
     const [error, setError] = useState<string>("")
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
-
-    const router = useRouter()
+    const [successFailMessage, setSuccessFailMessage] = useState<string>("")
 
     const login = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -23,9 +22,10 @@ export default function Login() {
 
             if (!res.ok) {
                 setError(data.error)
+                setSuccessFailMessage("Incorrect Details, please try again")
             } else {
                 setSuccess(true)
-                router.push('/')
+                setSuccessFailMessage("Logged in successfully")
             }
         } catch {
             setError("Network error")
@@ -38,10 +38,10 @@ export default function Login() {
 
             <form onSubmit={login}>
                 <div>
-                    <label htmlFor="username">Username:</label>
+                    <label htmlFor="email">Email:</label>
                     <input
-                        id="username" 
-                        type="text" 
+                        id="email"
+                        type="email"
                         value={email}
                         onChange = {e => setEmail(e.target.value)} 
                         required 
@@ -61,6 +61,8 @@ export default function Login() {
                     <button type="submit">Login</button>
                 </div>
             </form>
+
+            <h1>{successFailMessage}</h1>
         </div>
     )
 }
