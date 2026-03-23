@@ -8,6 +8,7 @@ import { increment } from '../store/counterSlice'
 import type { RootState } from '../store'
 import Player from './player'
 import Person from './person'
+import New from './new'
 
 export default function Home() {
   const count = useSelector((state: RootState) => state.counter.count)
@@ -127,6 +128,8 @@ export default function Home() {
       <Player message='hellooooo'/>
 
       <Person name = "Jamie-Lee" age = {22} />
+
+      <New name = "Jamie-Leeeeeeee NEWWW" age = {22} />
 
       <p>{message}</p>
     
